@@ -1,0 +1,95 @@
+{
+  "title": "The Locked Library",
+  "intro": "You wake up on a cold stone floor. Dust drifts in the dim light of a single lamp. You are inside a locked library. In front of you stand a desk, a bookshelf, a painting, a locked drawer and a door secured with a four-digit code. Explore, collect items and find the clues to escape.",
+  "starting_objects": ["desk", "bookshelf", "painting", "drawer", "door"],
+  "objects": {
+    "desk": {
+      "name": "desk",
+      "aliases": ["desk", "writing desk", "table"],
+      "examine": "A heavy oak desk covered in dust. A brass magnifying glass rests on the blotter, and a scrap of paper beside it reads: 'Not all books on the shelf are equal. Look for the four that stand out.'",
+      "reveals_items": ["magnifying_glass"]
+    },
+    "bookshelf": {
+      "name": "bookshelf",
+      "aliases": ["bookshelf", "shelf", "shelves", "bookcase"],
+      "examine": "Floor-to-ceiling shelves of dusty volumes. Four red books are arranged differently from the rest, their spines tilted outward.",
+      "reveals_objects": ["red_books"]
+    },
+    "red_books": {
+      "name": "four red books",
+      "aliases": ["red books", "four red books", "four books", "those books", "the books", "books", "red book"],
+      "examine": "Each red book has a handwritten number inside its front cover. From left to right they read: 3, 1, 4, 2."
+    },
+    "painting": {
+      "name": "painting",
+      "aliases": ["painting", "picture", "seascape", "lighthouse painting"],
+      "examine": "A stormy seascape with a lighthouse. Faint scratches in the foam of the waves are far too small to read with the naked eye.",
+      "use_effects": {
+        "magnifying_glass": {
+          "puzzle": "painting_code",
+          "text": "Through the magnifying glass the scratches resolve into four tiny numerals hidden in the foam: 9, 0, 2, 6."
+        }
+      }
+    },
+    "drawer": {
+      "name": "locked drawer",
+      "aliases": ["drawer", "locked drawer", "small drawer", "combination lock"],
+      "examine": "A small drawer with a four-digit combination lock.",
+      "examine_solved": "The drawer is open and its lock hangs loose.",
+      "lock": {
+        "puzzle": "drawer_code",
+        "code": "3142",
+        "success": "The dials click into place and the drawer slides open. Inside lies a small brass key.",
+        "reveals_items": ["brass_key"]
+      }
+    },
+    "door": {
+      "name": "door",
+      "aliases": ["door", "exit", "keypad", "metal plate", "plate", "heavy door"],
+      "examine": "A heavy oak door. Beside it is a keypad, hidden behind a locked metal plate with a small keyhole.",
+      "examine_plate_open": "A heavy oak door. The metal plate is open, exposing a keypad that waits for a four-digit code.",
+      "use_effects": {
+        "brass_key": {
+          "puzzle": "door_plate",
+          "text": "The brass key turns in the keyhole and the metal plate swings open, exposing a keypad that waits for a four-digit code."
+        }
+      },
+      "lock": {
+        "puzzle": "door_code",
+        "requires_puzzle": "door_plate",
+        "code": "9026",
+        "ends_game": true,
+        "success": "The keypad beeps, the bolts retract and the heavy door swings open. Daylight floods in - you have escaped the library!"
+      }
+    }
+  },
+  "items": {
+    "magnifying_glass": {
+      "name": "brass magnifying glass",
+      "aliases": ["magnifying glass", "brass magnifying glass", "magnifier", "glass", "lens"],
+      "description": "A brass magnifying glass with a worn wooden handle."
+    },
+    "brass_key": {
+      "name": "small brass key",
+      "aliases": ["brass key", "small brass key", "small key", "key"],
+      "description": "A small brass key with an ornate bow."
+    }
+  },
+  "puzzles": {
+    "drawer_code": "Open the drawer with the combination",
+    "painting_code": "Read the hidden numerals on the painting",
+    "door_plate": "Unlock the metal plate beside the door",
+    "door_code": "Enter the exit code on the keypad"
+  },
+  "hints": [
+    {"done": "examined:desk", "text": "Maybe start by examining the desk."},
+    {"done": "taken:magnifying_glass", "text": "There is a magnifying glass on the desk. Try taking it."},
+    {"done": "examined:bookshelf", "text": "Some books on the bookshelf may be worth a closer look."},
+    {"done": "examined:red_books", "text": "Examine the books that stand out on the shelf."},
+    {"done": "puzzle:drawer_code", "text": "The numbers from the red books might fit the lock on the drawer."},
+    {"done": "taken:brass_key", "text": "Something is inside the open drawer. Try taking it."},
+    {"done": "puzzle:painting_code", "text": "The painting hides something too small to see. Is there a tool that could help?"},
+    {"done": "puzzle:door_plate", "text": "The metal plate by the door has a keyhole. Perhaps use an item on the door."},
+    {"done": "puzzle:door_code", "text": "The keypad is open. Which four numbers have you discovered that you have not used yet?"}
+  ]
+}
