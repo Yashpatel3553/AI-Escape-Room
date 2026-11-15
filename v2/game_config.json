@@ -5,7 +5,7 @@
   "objects": {
     "desk": {
       "name": "desk",
-      "aliases": ["desk", "writing desk", "table"],
+      "aliases": ["desk", "writing desk", "table", "note", "paper", "scrap of paper", "blotter"],
       "examine": "A heavy oak desk covered in dust. A brass magnifying glass rests on the blotter, and a scrap of paper beside it reads: 'Not all books on the shelf are equal. Look for the four that stand out.'",
       "reveals_items": ["magnifying_glass"]
     },
