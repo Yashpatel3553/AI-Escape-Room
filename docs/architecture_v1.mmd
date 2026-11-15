@@ -1,0 +1,9 @@
+flowchart LR
+    P([Player]) -->|natural-language message| UI[Streamlit UI<br/>v1/app.py]
+    UI --> GS[GameSession<br/>v1/game.py<br/>chat history = only memory]
+    GS -->|system prompt with room, secrets & rules<br/>+ full conversation| LLM[(Gemini API<br/>Game Master)]
+    LLM -->|free-text reply<br/>may contain ESCAPED token| GS
+    GS -->|reply| UI
+    UI -->|story text| P
+    classDef risk fill:#fde2e2,stroke:#c0392b,color:#222;
+    class LLM risk;

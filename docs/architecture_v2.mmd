@@ -1,0 +1,25 @@
+flowchart TB
+    P([Player]) -->|message| UI[Streamlit UI<br/>v2/app.py<br/>state panel + restart]
+    UI --> GM[GameMaster.step<br/>v2/game_master.py]
+    GM --> S1{1. Injection screen<br/>regex, Python}
+    S1 -->|rule-bypass attempt| ENG
+    S1 -->|ok| PAR[2. Intent parser]
+    PAR <-->|vocabulary only,<br/>no secrets| LLM1[(Gemini<br/>JSON intent)]
+    PAR -.->|API unavailable| RB[Rule-based parser]
+    PAR --> SAN[3. Sanitise action<br/>whitelist, known ids,<br/>digits typed by player]
+    RB --> SAN
+    SAN -->|validated action| ENG[4. GameEngine.handle<br/>v2/engine.py<br/>validates and applies]
+    CFG[(game_config.json<br/>objects, items, puzzles,<br/>solutions, hints)] --> ENG
+    ENG <--> ST[(Game state dict<br/>inventory, discovered objects,<br/>solved puzzles, locks, door)]
+    ENG -->|outcome facts| NAR[5. Narrator]
+    NAR <-->|facts only| LLM2[(Gemini<br/>narration)]
+    NAR -.->|API unavailable| TPL[Template text]
+    NAR --> FIL[6. Output filter<br/>no numbers or codes<br/>beyond the facts]
+    TPL --> FIL
+    FIL -->|safe narration| UI
+    ST -->|public state, no secrets| UI
+    UI --> P
+    classDef py fill:#e3f2e1,stroke:#2e7d32,color:#222;
+    classDef llm fill:#fff3cd,stroke:#b8860b,color:#222;
+    class S1,SAN,ENG,FIL,RB,TPL py;
+    class LLM1,LLM2 llm;
