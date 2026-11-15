@@ -133,9 +133,9 @@ def rule_parse(text: str, engine: GameEngine) -> dict:
     use_words = re.search(r"\b(use|apply|insert|unlock|open|put|try)\b", low) or (obj and re.search(r"\b(with|through|using)\b", low))
     if item and use_words and not re.search(r"\b(take|grab|pick)\b", low):
         return {"action": "use", "target": obj, "item": item, "code": None}
-    if re.search(r"\b(take|grab|pick|collect|get|pocket|fetch|snatch|steal)\b", low) and (item or obj):
+    if re.search(r"\b(take|grab|pick|collect|get|pocket|fetch|snatch|steal)\b", low):
         return {"action": "take", "target": obj, "item": item, "code": None}
-    if re.search(r"\b(examine|inspect|look|check|search|read|investigate|study|view|see|read)\b", low) and (obj or item):
+    if re.search(r"\b(examine|inspect|look|check|search|read|investigate|study|view|see)\b", low):
         return {"action": "examine", "target": obj, "item": None if obj else item, "code": None}
     if re.search(r"\b(open|unlock|push|pull|force|break|bypass|escape|leave)\b", low):
         return {"action": "open", "target": obj or ("door" if re.search(r"\b(escape|leave)\b", low) else None), "item": None, "code": None}

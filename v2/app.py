@@ -64,6 +64,8 @@ for role, text in st.session_state.messages:
 
 if gm.engine.state["escaped"]:
     st.success("🎉 You escaped the library! Press **Restart game** to play again.")
+    if st.session_state.pop("celebrate", False):
+        st.balloons()
 elif prompt := st.chat_input("What do you do?"):
     prompt = prompt.strip()[:500]
     st.session_state.messages.append(("user", prompt))
@@ -80,5 +82,5 @@ elif prompt := st.chat_input("What do you do?"):
         "narrator": out["narrator"],
     }
     if out["escaped"]:
-        st.balloons()
+        st.session_state.celebrate = True
     st.rerun()
